@@ -92,6 +92,43 @@ Sistema web de controle financeiro para clínica de estética, criado a partir d
 
 Durante o desenvolvimento, `npm run dev` recompila automaticamente.
 
+## Levar o banco para outro servidor (phpMyAdmin)
+
+Não use o "exportar dados" do HeidiSQL/phpMyAdmin com só os `INSERT`: sem a estrutura das tabelas a
+importação falha ("Table doesn't exist") e, se as tabelas já existirem, dá "Duplicate entry".
+Gere o arquivo pelo sistema:
+
+```bash
+php artisan financeiro:exportar-sql
+```
+
+O arquivo vai para `database/exportacoes/` (fora do git) e:
+
+- cria as tabelas que faltam (estrutura compatível com MySQL 5.7+/8 e MariaDB);
+- inclui usuários, categorias, taxas, pacientes/fornecedores, lançamentos, auditoria e migrations;
+- não leva sessões de login nem cache;
+- pode ser importado mais de uma vez, ou depois de um `php artisan migrate --seed`, sem duplicar nada.
+
+No phpMyAdmin: selecione o banco → **Importar** → escolha o arquivo → **Importar**.
+No servidor, use no `.env` a **mesma `APP_KEY`** do computador de origem (a verificação em duas etapas
+fica criptografada com ela).
+
+## Publicar em hospedagem compartilhada sem terminal (ex.: Hostinger)
+
+1. No computador: `composer install --no-dev --optimize-autoloader` e `npm run build`
+   (depois do envio, rode `composer install` de novo para voltar a ter as ferramentas de teste).
+2. Envie o projeto inteiro para `public_html`, **incluindo** `vendor/`, `public/build/` e os arquivos
+   ocultos `.htaccess` (o da raiz e o de `public/`). No Gerenciador de Arquivos, ative "mostrar ocultos".
+   O `.htaccess` da raiz encaminha tudo para `public/` e bloqueia o acesso a `.env`, `vendor`, `storage` etc.
+3. Crie o `.env` no servidor a partir do `.env.example`: `APP_ENV=production`, `APP_DEBUG=false`,
+   `APP_URL=https://seu-dominio`, os dados do banco da hospedagem, `SESSION_SECURE_COOKIE=true`
+   e a **mesma `APP_KEY`** do computador de origem.
+4. No painel da hospedagem: PHP 8.3 ou superior com a extensão `bcmath`, SSL ativo e "Forçar HTTPS".
+5. Importe o banco pelo phpMyAdmin (seção acima).
+
+Se aparecer **403**, quase sempre é o `.htaccess` da raiz que não foi enviado. Se aparecer **500**, veja
+`storage/logs/laravel.log` (as pastas `storage/` e `bootstrap/cache/` precisam permitir escrita).
+
 ## Testes
 
 ```bash

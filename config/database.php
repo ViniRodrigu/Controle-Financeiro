@@ -59,6 +59,8 @@ return [
             'prefix_indexes' => true,
             'strict' => true,
             'engine' => null,
+            // Fuso fixo na conexão: os horários ficam certos mesmo se o servidor estiver em UTC.
+            'timezone' => env('DB_TIMEZONE', '-03:00'),
             'options' => extension_loaded('pdo_mysql') ? array_filter([
                 Mysql::ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
@@ -79,6 +81,7 @@ return [
             'prefix_indexes' => true,
             'strict' => true,
             'engine' => null,
+            'timezone' => env('DB_TIMEZONE', '-03:00'),
             'options' => extension_loaded('pdo_mysql') ? array_filter([
                 Mysql::ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],

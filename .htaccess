@@ -1,0 +1,30 @@
+# Controle Financeiro · .htaccess da RAIZ do projeto
+#
+# Para hospedagem compartilhada (ex.: Hostinger) quando o projeto inteiro fica dentro de
+# public_html e não é possível apontar o domínio direto para a pasta /public.
+# Encaminha tudo para /public e impede o acesso ao restante do código (.env, vendor, storage...).
+# Localmente (Laravel Herd/nginx) este arquivo é ignorado.
+
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Para forçar HTTPS (só depois que o SSL do domínio estiver ativo), descomente:
+    # RewriteCond %{HTTPS} !=on
+    # RewriteCond %{HTTP:X-Forwarded-Proto} !https
+    # RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # Mantém a validação do certificado SSL gratuito funcionando.
+    RewriteCond %{REQUEST_URI} !^/\.well-known/
+
+    # Todas as requisições vão para a pasta public/ (lá o .htaccess do Laravel assume).
+    RewriteRule ^((?!public/).*)$ public/$1 [L]
+</IfModule>
+
+# Segunda barreira: mesmo que o rewrite falhe, nunca entrega código ou configurações.
+<FilesMatch "^\.|^(artisan|composer\.(json|lock)|package(-lock)?\.json|phpunit\.xml|vite\.config\.js)$|\.(sql|sqlite|log|md)$">
+    Require all denied
+</FilesMatch>
+
+RedirectMatch 404 ^/(app|bootstrap|config|database|lang|node_modules|resources|routes|storage|tests|vendor)(/|$)

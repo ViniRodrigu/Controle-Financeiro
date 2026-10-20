@@ -7,7 +7,7 @@ Sistema web de controle financeiro para clínica de estética, criado a partir d
 
 | Camada | Tecnologia |
 | --- | --- |
-| Back-end | PHP 8.3+ · Laravel 13 · Laravel Fortify (login e verificação em duas etapas) |
+| Back-end | PHP 8.4+ · Laravel 13 · Laravel Fortify (login e verificação em duas etapas) |
 | Front-end | Blade · Bootstrap 5.3 · Bootstrap Icons · Chart.js · Vite |
 | Banco de dados | MySQL 8 (utf8mb4) |
 | Testes | PHPUnit (53 testes de cálculo, segurança, permissões, relatórios e importação) |
@@ -123,7 +123,9 @@ fica criptografada com ela).
 3. Crie o `.env` no servidor a partir do `.env.example`: `APP_ENV=production`, `APP_DEBUG=false`,
    `APP_URL=https://seu-dominio`, os dados do banco da hospedagem, `SESSION_SECURE_COOKIE=true`
    e a **mesma `APP_KEY`** do computador de origem.
-4. No painel da hospedagem: PHP 8.3 ou superior com a extensão `bcmath`, SSL ativo e "Forçar HTTPS".
+4. No painel da hospedagem: PHP 8.4 ou superior com a extensão `bcmath`, SSL ativo e "Forçar HTTPS".
+   Atenção: a versão escolhida no painel vale só para o site. No SSH, chame o PHP pela versão
+   (na Hostinger: `/opt/alt/php85/usr/bin/php artisan ...`), senão o terminal usa a versão padrão do servidor.
 5. Importe o banco pelo phpMyAdmin (seção acima).
 
 Se aparecer **403**, quase sempre é o `.htaccess` da raiz que não foi enviado. Se aparecer **500**, veja

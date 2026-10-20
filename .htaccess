@@ -28,3 +28,6 @@ Options -Indexes
 </FilesMatch>
 
 RedirectMatch 404 ^/(app|bootstrap|config|database|lang|node_modules|resources|routes|storage|tests|vendor)(/|$)
+
+# Pastas e arquivos ocultos (.git, .env, .idea...), exceto o .well-known usado pelo SSL.
+RedirectMatch 404 /\.(?!well-known(/|$))

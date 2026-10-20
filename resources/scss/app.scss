@@ -1,0 +1,530 @@
+// Tema do Controle Financeiro sobre o Bootstrap 5.3.
+
+// 1. Variáveis
+$font-family-sans-serif: "Inter Variable", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+$primary: #7b3f6e;
+$secondary: #6b7280;
+$success: #1e9e6a;
+$info: #3a86c8;
+$warning: #e8a33d;
+$danger: #d6455d;
+$light: #f4f3f6;
+$dark: #1f1b24;
+
+$body-bg: #f5f4f7;
+$body-color: #22202a;
+$border-color: #e7e5ec;
+$text-muted: #6b6878;
+
+$border-radius: .5rem;
+$border-radius-sm: .375rem;
+$border-radius-lg: .75rem;
+
+$font-size-base: .9375rem;
+$headings-font-weight: 650;
+$link-decoration: none;
+
+$card-border-width: 0;
+$card-border-radius: .875rem;
+$card-cap-bg: transparent;
+$card-spacer-y: 1.25rem;
+$card-spacer-x: 1.25rem;
+
+$input-border-color: #dcd9e2;
+$input-focus-border-color: rgba($primary, .55);
+$input-btn-focus-color: rgba($primary, .18);
+$input-btn-focus-width: .2rem;
+$form-label-font-weight: 550;
+$form-label-margin-bottom: .35rem;
+
+$btn-font-weight: 550;
+$table-cell-padding-y: .7rem;
+$table-cell-padding-x: .75rem;
+$table-hover-bg-factor: .025;
+$badge-font-weight: 600;
+$dropdown-border-color: $border-color;
+$modal-content-border-width: 0;
+$alert-border-width: 0;
+
+@import "bootstrap/scss/bootstrap";
+
+// 2. Estrutura (menu lateral + conteúdo)
+:root {
+    --app-sidebar-width: 264px;
+    --app-sidebar-bg: #1f1b24;
+    --app-sidebar-color: rgba(255, 255, 255, .68);
+    --app-sombra: 0 1px 2px rgba(24, 16, 32, .04), 0 2px 8px rgba(24, 16, 32, .05);
+}
+
+body {
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: "cv11", "ss01";
+}
+
+.tabular {
+    font-variant-numeric: tabular-nums;
+}
+
+.app-shell {
+    display: flex;
+    min-height: 100vh;
+}
+
+.app-sidebar {
+    width: var(--app-sidebar-width);
+    flex-shrink: 0;
+    flex-direction: column;
+    background: var(--app-sidebar-bg);
+    color: var(--app-sidebar-color);
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.offcanvas.app-sidebar-mobile {
+    --bs-offcanvas-width: var(--app-sidebar-width);
+    --bs-offcanvas-bg: var(--app-sidebar-bg);
+    color: var(--app-sidebar-color);
+}
+
+.app-brand {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    padding: 1.4rem 1.25rem 1.1rem;
+    color: #fff;
+
+    .app-brand-icon {
+        width: 38px;
+        height: 38px;
+        border-radius: 11px;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(135deg, lighten($primary, 12%), $primary);
+        font-size: 1.15rem;
+        box-shadow: 0 6px 16px rgba($primary, .45);
+    }
+
+    .app-brand-nome {
+        font-weight: 650;
+        line-height: 1.1;
+    }
+
+    .app-brand-sub {
+        font-size: .75rem;
+        color: rgba(255, 255, 255, .5);
+    }
+}
+
+.app-nav {
+    padding: .5rem .85rem 1rem;
+
+    .app-nav-titulo {
+        font-size: .68rem;
+        font-weight: 650;
+        text-transform: uppercase;
+        letter-spacing: .08em;
+        color: rgba(255, 255, 255, .38);
+        padding: 1rem .75rem .4rem;
+    }
+
+    .nav-link {
+        display: flex;
+        align-items: center;
+        gap: .75rem;
+        padding: .55rem .75rem;
+        border-radius: .55rem;
+        color: var(--app-sidebar-color);
+        font-weight: 500;
+        transition: background-color .15s, color .15s;
+
+        .bi {
+            font-size: 1.05rem;
+            opacity: .85;
+        }
+
+        &:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, .06);
+        }
+
+        &.active {
+            color: #fff;
+            background: rgba(lighten($primary, 18%), .28);
+            box-shadow: inset 3px 0 0 lighten($primary, 28%);
+        }
+    }
+}
+
+.app-sidebar-rodape {
+    margin-top: auto;
+    padding: 1rem 1.25rem 1.25rem;
+    border-top: 1px solid rgba(255, 255, 255, .07);
+    font-size: .78rem;
+    color: rgba(255, 255, 255, .42);
+}
+
+.app-main {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.app-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 1020;
+    height: 62px;
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    padding: 0 1.5rem;
+    background: rgba(255, 255, 255, .88);
+    backdrop-filter: saturate(180%) blur(8px);
+    border-bottom: 1px solid $border-color;
+}
+
+.app-content {
+    padding: 1.75rem 1.5rem 3rem;
+    max-width: 1440px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+@include media-breakpoint-down(md) {
+    .app-content {
+        padding: 1.25rem 1rem 2.5rem;
+    }
+
+    .app-topbar {
+        padding: 0 1rem;
+    }
+}
+
+.avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: inline-grid;
+    place-items: center;
+    font-size: .78rem;
+    font-weight: 650;
+    background: rgba($primary, .12);
+    color: $primary;
+}
+
+// 3. Componentes
+.card {
+    box-shadow: var(--app-sombra);
+}
+
+.card-header {
+    border-bottom: 1px solid $border-color;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    font-weight: 650;
+}
+
+.cabecalho-pagina {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+
+    h1 {
+        font-size: 1.55rem;
+        margin: 0;
+        letter-spacing: -.015em;
+    }
+
+    .subtitulo {
+        color: $text-muted;
+        margin-top: .2rem;
+    }
+}
+
+.kpi {
+    height: 100%;
+
+    .card-body {
+        display: flex;
+        flex-direction: column;
+        gap: .35rem;
+    }
+
+    .kpi-topo {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .kpi-rotulo {
+        font-size: .8rem;
+        font-weight: 550;
+        color: $text-muted;
+    }
+
+    .kpi-icone {
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        display: grid;
+        place-items: center;
+        font-size: 1.1rem;
+    }
+
+    .kpi-valor {
+        font-size: 1.55rem;
+        font-weight: 700;
+        letter-spacing: -.02em;
+        font-variant-numeric: tabular-nums;
+        line-height: 1.2;
+    }
+
+    .kpi-rodape {
+        font-size: .78rem;
+        color: $text-muted;
+    }
+
+    &.kpi-compacto .kpi-valor {
+        font-size: 1.2rem;
+    }
+}
+
+@each $cor, $valor in (primary: $primary, success: $success, danger: $danger, warning: $warning, info: $info, secondary: $secondary) {
+    .suave-#{$cor} {
+        background-color: rgba($valor, .12) !important;
+        color: darken($valor, 6%) !important;
+    }
+}
+
+.badge {
+    font-weight: 600;
+    letter-spacing: .01em;
+}
+
+.table {
+    margin-bottom: 0;
+
+    > thead th {
+        font-size: .72rem;
+        text-transform: uppercase;
+        letter-spacing: .05em;
+        color: $text-muted;
+        font-weight: 650;
+        background: $light;
+        border-bottom-width: 1px;
+        white-space: nowrap;
+    }
+
+    > tbody td {
+        vertical-align: middle;
+    }
+}
+
+.table-card {
+    .table > :not(caption) > * > *:first-child {
+        padding-left: 1.25rem;
+    }
+
+    .table > :not(caption) > * > *:last-child {
+        padding-right: 1.25rem;
+    }
+}
+
+.valor-entrada {
+    color: darken($success, 4%);
+}
+
+.valor-saida {
+    color: $danger;
+}
+
+.ponto-cor {
+    width: .65rem;
+    height: .65rem;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+    background: $secondary;
+}
+
+.progress-fina {
+    height: 6px;
+    background: $light;
+
+    .progress-bar {
+        border-radius: 6px;
+    }
+}
+
+.vazio {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: $text-muted;
+
+    .bi {
+        font-size: 2.2rem;
+        opacity: .5;
+        display: block;
+        margin-bottom: .5rem;
+    }
+}
+
+.filtros {
+    .form-label {
+        font-size: .78rem;
+        color: $text-muted;
+    }
+}
+
+// Seletor visual de tipo (Entrada / Saída) no formulário de lançamento.
+.seletor-tipo {
+    .btn {
+        padding: .8rem 1rem;
+        font-weight: 600;
+        border-width: 1.5px;
+    }
+
+    .btn-check:checked + .btn-outline-success {
+        box-shadow: 0 6px 16px rgba($success, .25);
+    }
+
+    .btn-check:checked + .btn-outline-danger {
+        box-shadow: 0 6px 16px rgba($danger, .25);
+    }
+}
+
+.resumo-calculo {
+    background: $light;
+    border-radius: $border-radius-lg;
+    padding: 1rem 1.15rem;
+
+    dt {
+        font-weight: 500;
+        color: $text-muted;
+    }
+
+    dd {
+        font-variant-numeric: tabular-nums;
+        font-weight: 600;
+        text-align: right;
+        white-space: nowrap;
+        margin-bottom: .35rem;
+    }
+
+    .total {
+        border-top: 1px dashed $input-border-color;
+        padding-top: .5rem;
+        margin-top: .25rem;
+    }
+}
+
+@include media-breakpoint-up(lg) {
+    .resumo-fixo {
+        position: sticky;
+        top: 80px;
+    }
+}
+
+.grafico {
+    position: relative;
+    height: 320px;
+}
+
+.grafico-rosca {
+    position: relative;
+    height: 240px;
+}
+
+// Matriz anual do resumo (primeira coluna fixa ao rolar).
+.tabela-matriz {
+    font-size: .84rem;
+
+    th,
+    td {
+        white-space: nowrap;
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+    }
+
+    th:first-child,
+    td:first-child {
+        text-align: left;
+        position: sticky;
+        left: 0;
+        background: $white;
+        z-index: 1;
+        min-width: 220px;
+    }
+
+    thead th:first-child {
+        background: $light;
+    }
+
+    .linha-grupo td {
+        font-weight: 650;
+        background: lighten($light, 1%);
+    }
+
+    .linha-total td {
+        font-weight: 700;
+        border-top: 2px solid $border-color;
+    }
+}
+
+.auth-pagina {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 1.5rem;
+    background:
+        radial-gradient(1200px 600px at 10% -10%, rgba($primary, .16), transparent 60%),
+        radial-gradient(900px 500px at 110% 110%, rgba($info, .12), transparent 60%),
+        $body-bg;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 420px;
+}
+
+.qr-2fa svg {
+    width: 192px;
+    height: 192px;
+}
+
+.codigos-recuperacao {
+    font-family: $font-family-monospace;
+    columns: 2;
+    background: $light;
+    border-radius: $border-radius;
+    padding: 1rem 1.25rem;
+}
+
+@media print {
+    .app-sidebar,
+    .app-topbar,
+    .nao-imprimir {
+        display: none !important;
+    }
+
+    .app-content {
+        padding: 0;
+        max-width: none;
+    }
+
+    .card {
+        box-shadow: none;
+        border: 1px solid $border-color;
+    }
+
+    body {
+        background: #fff;
+    }
+}
